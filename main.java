@@ -3,7 +3,7 @@ public class main
 {
     public static Random r         = new Random();
     public static String playerName= "";            //Nome do jogador.
-    public static int linha[]      = new int[8];    //Array para preencher linhas corretamente.
+    public static int linha[]      = new int[7];    //Array para preencher linhas corretamente.
     public static boolean J1       = false;         //Seta o jogador atual.
     public static boolean J2       = false;         //Seta o jogador atual.     
     public static boolean PC       = false;         //Seta o jogador atual.
@@ -45,6 +45,7 @@ public class main
                 if(sc.hasNextInt()){
                     int col = sc.nextInt();
                     wenttocatch = true;
+                    hasWinner = ganhou(col);
                     play(col, lig4, modo);      
                 }else{
                     sc.nextLine();
@@ -86,11 +87,9 @@ public class main
             if(J1){
             J1 = false;
             J2 = true;
-            System.out.println(playerName);
             }else if(!J1){
             J2 = false;
             J1 = true;
-            System.out.println(playerName);
             }
         }else if(modo == 2){ //Contra PC
             
@@ -116,5 +115,97 @@ public class main
             }
             System.out.println();
         }
+    }
+    
+    
+    public static boolean ganhou(int col){
+        String jogador;
+        int cont = 0;
+        //coluna
+        for(int i = linha[col-1] + 1; i < 6; i++){
+            if(playerName.equals(lig4[i][col-1])){
+                cont++;
+            }
+            else
+                break;
+        }
+        if(cont >=3)
+            return true;
+        
+        //linha
+        cont = 0;
+        for(int i = col - 2; i >=0; i--){
+           if(playerName.equals(lig4[linha[col-1]][i])){
+                cont++;
+            }
+            else
+                break;
+        
+        }
+        for(int i = col; i < 7; i++){
+           if(playerName.equals(lig4[linha[col-1]][i])){
+                cont++;
+            }
+            else
+                break;
+        }
+        if(cont >=3)
+            return true;
+            
+        //diagonal principal
+        cont = 0;
+        int x, y;
+        x = linha[col - 1]-1;
+        y = col - 2;
+        while(x >= 0 && y >= 0){
+            if(playerName.equals(lig4[x][y])){
+                cont++;
+            }
+            else
+                break;
+            x--;
+            y--;
+        }
+        x = linha[col - 1] + 1;
+        y = col;
+        while(x <= 5 && y <= 6){
+            if(playerName.equals(lig4[x][y])){
+                cont++;
+            }
+            else
+                break;
+            x++;
+            y++;
+        }
+        if(cont >=3)
+            return true;
+            
+        //diagonal secundaria
+        cont = 0;
+        x = linha[col - 1]-1;
+        y = col;
+        while(x >= 0 && y <= 5){
+            if(playerName.equals(lig4[x][y])){
+                cont++;
+            }
+            else
+                break;
+            x--;
+            y++;
+        }
+        x = linha[col - 1] + 1;
+        y = col - 2;
+        while(x <= 5 && y >= 0){
+            if(playerName.equals(lig4[x][y])){
+                cont++;
+            }
+            else
+                break;
+            x++;
+            y--;
+        }
+        if(cont >=3)
+            return true;    
+        return false;
     }
 }
