@@ -25,12 +25,15 @@ public class main
         {
             case 1:
             startGame(1);
+            break;
             case 2:
             startGame(2);
+            break;
             default:
             startGame(1);
+            break;
         }
-           
+          
         while(!hasWinner)
         {
             do{
@@ -45,7 +48,6 @@ public class main
                 if(sc.hasNextInt()){
                     int col = sc.nextInt();
                     wenttocatch = true;
-                    hasWinner = ganhou(col);
                     play(col, lig4, modo);      
                 }else{
                     sc.nextLine();
@@ -58,9 +60,9 @@ public class main
     {            
             if(mode == 1){
                 if(r.nextBoolean()){//Seleciona aleatório o primeiro jogador
-                J1 = true;
+                    J1 = true;
                 }else{
-                J2 = true;
+                    J2 = true;
                 }
             }else if(mode == 2){ //Contra PC.
                 J1 = true;       //Sempre começa com jogador 1
@@ -71,6 +73,7 @@ public class main
     {
         if((col > 0 && col < 8) && linha[col-1] >= 0)
         {
+            hasWinner = ganhou(col);
             lig4[linha[col-1]][col-1] = playerName;        
             linha[col-1]--;
             print(lig4);
@@ -107,6 +110,9 @@ public class main
     }
     public static void print(String lig4[][])
     {
+        for(int i = 0; i < 30; i++)
+            System.out.println();
+        System.out.println("  01   02   03   04   05   06   07");
         for(int i=0; i<lig4.length; i++)
         {
             for(int j = 0; j<lig4[0].length; j++)
@@ -115,6 +121,8 @@ public class main
             }
             System.out.println();
         }
+        for(int i = 0; i < 10; i++)
+            System.out.println();
     }
     
     
@@ -149,7 +157,7 @@ public class main
             else
                 break;
         }
-        if(cont >=3)
+        if(cont >= 3)
             return true;
             
         //diagonal principal
